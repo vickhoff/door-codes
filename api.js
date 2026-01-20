@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import { addItem, connectToDatabase, removeItem, listItems } from "./database.js";
-=======
-import { addItem, connectToDatabase, removeItem } from "./database.js";
->>>>>>> 31af79354736276efeb7877c068eb4e6cd8a94d9
-
 import express from "express";
 
 const app = express();
@@ -22,7 +17,6 @@ const startApp = async () => {
     }
 }
 
-<<<<<<< HEAD
 app.post("/api/add", async (req, res) => {
     const { name, address, code } = req.body
     const newItem = { name, address, code };
@@ -36,6 +30,7 @@ app.post("/api/add", async (req, res) => {
             missingFields: missingFields
         })
     }
+    
     const data = await addItem(newItem);
     res.status(200)
             .json(data)
@@ -60,28 +55,6 @@ app.use ((error, req, res, next) => {
     res.status (statusCode).json({
         message: message
     })
-=======
-app.post("/add", async (req, res) => {
-    const { name, address, code } = req.body
-    try {
-        const newItem = { name, address, code };
-        const data = await addItem(newItem);
-        console.log(`${name} was added succesfully`)
-        res.status(200).json(data)
-    } catch {
-        res.sendStatus(500);
-    }
-})
-
-app.delete("/delete/:id", async (req, res) => {
-    try {
-        await removeItem(req.params.id)
-        res.sendStatus(200)
-    } catch(error) {
-        console.error()
-        res.sendStatus(500);
-    }
->>>>>>> 31af79354736276efeb7877c068eb4e6cd8a94d9
 })
 
 startApp()
