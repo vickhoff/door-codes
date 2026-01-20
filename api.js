@@ -18,46 +18,43 @@ const startApp = async () => {
     }
 }
 
-app.post("/add", async (req, res) => {
+app.post("/api/add", async (req, res) => {
     const { name, address, code } = req.body
-    try {
-        const newItem = { name, address, code };
-        const data = await addItem(newItem);
-        console.log(`${name} was added succesfully`)
-        res.status(200).json(data)
-    } catch {
-        res.sendStatus(500);
-    }
-})
+    const newItem = { name, address, code };
 
-app.get("/items", async (req, res) => {
-    try {
+    const requiredFields = ["name", "address", "code"];
+    const missingFields = requiredFields.filter(field => !newItem[field])
+
+    if (missingFields.length > 0) {
+        return res.status(400).json({
+            error: "Missing required fields",
+            missingFields: missingFields
+        })
+    }
+    const data = await addItem(newItem);
+    res.status(200)
+            .json(data)
+    })
+
+app.get("/api/items", async (req, res) => {
         const data = await listItems();
         res.status(200)
             .json(data);
-    } catch {
-        res.sendStatus(500);
-    }
-})
+    })
 
-app.delete("/delete/:id", async (req, res) => {
-    try {
+app.delete("/api/delete/:id", async (req, res) => {
         await removeItem(req.params.id)
         console.log("Item deleted");
-        res.sendStatus(200)
-    } catch(error) {
-        console.error()
-        res.sendStatus(500);
-    }
+        res.status(200)
 })
 
 app.use ((error, req, res, next) => {
-    error.statusCode = error.statusCode || 500;
-    error.status = error.status || "Something went wrong";
-    res.status(error.statusCode).json({
-        status: error.statusCode,
-        message: error.message
-    });
+    console.error(error)
+    const statusCode = error.status || 500;
+    const message = error.message || "Something went wrong"; 
+    res.status (statusCode).json({
+        message: message
+    })
 })
 
 startApp()

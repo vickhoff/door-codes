@@ -29,5 +29,11 @@ export const removeItem = async (id) => {
     const collection = db.collection("items");
     const deleteResult = await collection.deleteOne({ _id: ObjectId.createFromHexString(id) });
     console.log('Deleted documents: ', deleteResult);
+    
+    if (deleteResult.deletedCount === 0) {
+        const error = new Error("Item wasn't found.");
+        error.status = 404;
+        throw error;
+    }
 }
 
