@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables (Sensitive data)
+.env
+.env.local
+
+# Debug logs
+npm-debug.log*
+yarn-error.log*
+
+# Build folders
+dist/
+build/
+
+# Configuration files
+nodemon.json
