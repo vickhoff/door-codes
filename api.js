@@ -1,5 +1,6 @@
-import { connectToDatabase } from "./database.js";  // ✅ Named import
+import { connectToDatabase } from "./database.js";
 import express from "express";
+
 
 import itemsRouter from "./routes/items.js";
 import usersRouter from "./routes/users.js";
