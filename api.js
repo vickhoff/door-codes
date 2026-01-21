@@ -1,6 +1,9 @@
 import { connectToDatabase } from "./database.js";  // ✅ Named import
 import express from "express";
+
 import itemsRouter from "./routes/items.js";
+import usersRouter from "./routes/users.js";
+import authRouter from "./routes/auth.js";
 
 // ... rest of file stays the same
 
@@ -21,7 +24,9 @@ const startApp = async () => {
     }
 }
 
-app.use("/api", itemsRouter);
+app.use("/api/items", itemsRouter);
+app.use("/api/user", usersRouter);
+app.use("/api/auth", authRouter);
 
 app.use ((error, req, res, next) => {
     console.error(error)

@@ -13,11 +13,11 @@ const register = async (req, res, next) => {
             password  // Just pass plain password
         });
         await user.save();
-        res.json({
+        res.status(201).json({
             message: "Registration successful"
         });
     } catch (error) {
-        next(error);
+        return next(error);
     }
 }
 
