@@ -4,15 +4,15 @@ import bcrypt from "bcrypt";
 const itemSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: [true, "Name is required"]
     },
     address: {
         type: String,
-        required: true
+        required: [true, "Address is required"]
     },
     code: {
         type: String,
-        required: true
+        required: [true, "Code is required"]
     }
 }, { timestamps: true });
 
