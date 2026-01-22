@@ -1,10 +1,10 @@
 import express from "express"
-import { addItem, removeItem, listItems } from "../services/items.js";
+import { createItem, deleteItem, getItems } from "../controllers/items.js";
 
 const router = express.Router();
 
-router.post("/add", addItem);
-router.get("/items", listItems);
-router.delete("/delete/:id", removeItem)
+router.post("/add", createItem);
+router.get("/", getItems);
+router.delete("/delete/:id", deleteItem)
 
 export default router;

@@ -1,9 +1,7 @@
-import mongoose from "mongoose";
 import Item from "../models/item.js"
 
 const listItems = async () => {
-    const collection = db.collection("items");
-    const data = await collection.find().toArray();
+    const data = await Item.find()
     return data;
 }
 
