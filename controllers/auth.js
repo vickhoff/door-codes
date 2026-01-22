@@ -6,11 +6,10 @@ const register = async (req, res, next) => {
     const { username, email, password } = req.body;
 
     try {
-        // Don't manually hash - your pre-save hook does this automatically!
         const user = new User({
             username,
             email,
-            password  // Just pass plain password
+            password
         });
         await user.save();
         res.status(201).json({
@@ -41,7 +40,7 @@ const login = async (req, res, next) => {
         }
 
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-            expiresIn: "1h"  // Fixed: "1 hour" should be "1h"
+            expiresIn: "1h"
         });
         res.json({ token });
     } catch (error) {
