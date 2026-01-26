@@ -5,7 +5,6 @@ import express from "express";
 import itemsRouter from "./routes/items.js";
 import usersRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
-import testRouter from "./routes/test.js";
 
 const app = express();
 app.use(express.json());
@@ -26,7 +25,6 @@ const startApp = async () => {
 app.use("/api/items", itemsRouter);
 app.use("/api/user", usersRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/test", testRouter);
 
 app.use ((error, req, res, next) => {
     console.error(error)
