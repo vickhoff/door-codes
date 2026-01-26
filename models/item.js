@@ -13,6 +13,11 @@ const itemSchema = new mongoose.Schema({
     code: {
         type: String,
         required: [true, "Code is required"]
+    },
+    userId: {
+        type: "ObjectId",
+        ref: "User",
+        required: true
     }
 }, { timestamps: true });
 

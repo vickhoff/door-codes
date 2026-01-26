@@ -3,7 +3,8 @@ import Item from "../models/item.js"
 const createItem = async (req, res, next) => {
     try {
         const { name, address, code } = req.body;
-        const data = await Item.create({ name, address, code });
+        const userId = req.user._id;
+        const data = await Item.create({ name, address, code, userId: userId });
         res.status(200).json(data);
     } catch (error) {
         if (error.name === "ValidationError") {
