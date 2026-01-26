@@ -18,7 +18,8 @@ const createItem = async (req, res, next) => {
 
 const getItems = async (req, res, next) => {
     try {
-        const data = await Item.find();
+        const userId = req.user._id;
+        const data = await Item.find({userId: userId});
         res.status(200).json(data);
     } catch (error) {
         next(error);
@@ -42,6 +43,18 @@ const getItem = async (req, res, next) => {
 
 const deleteItem = async (req, res, next) => {
     try {
+        const item = await Item.findById(req.params.id);
+        const userId = req.user._id;
+        const itemUserId = item.userId
+        console.log("user id: ", userId)
+        console.log("items user id: ", itemUserId)
+        
+        if (String(userId) != String(itemUserId)) {
+            const error = new Error("Not authorized.");
+            error.status = 403;
+            throw error;
+        }
+
         const deleteResult = await Item.findByIdAndDelete(req.params.id);
 
         if (!deleteResult) {

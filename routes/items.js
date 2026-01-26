@@ -5,8 +5,8 @@ import { authenticate } from "../middleware/auth.js";
 const router = express.Router();
 
 router.post("/add", authenticate, createItem);
-router.get("/", getItems);
+router.get("/", authenticate, getItems);
 router.get("/:id", getItem);
-router.delete("/delete/:id", deleteItem)
+router.delete("/delete/:id", authenticate, deleteItem)
 
 export default router;
