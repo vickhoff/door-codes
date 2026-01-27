@@ -4,17 +4,18 @@ import bcrypt from "bcrypt";
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: true,
+        required: [true, "Username is required"],
         unique: true
     },
     email: {
         type: String,
-        required: true,
+        required: [true, "Email is required"],
+        validate: [validateEmail, "Please fill in a valid email address"],
         unique: true
     },
     password: {
         type: String,
-        required: true
+        required: [true, "Password is required"]
     },
     role: {
         type: String,
@@ -24,6 +25,12 @@ const userSchema = new mongoose.Schema({
 },
     { timestamps: true }
 );
+
+//Validate email
+function validateEmail(email) {
+    const emailRegex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
+    return emailRegex.test(email);
+}
 
 //Hash password before saving to database
 userSchema.pre("save", async function () {
