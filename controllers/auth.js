@@ -16,6 +16,11 @@ const register = async (req, res, next) => {
             message: "Registration successful"
         });
     } catch (error) {
+        if (error.name === "ValidationError") {
+            return res.status(400).json({
+                error: error.message
+            });
+        }
         return next(error);
     }
 }

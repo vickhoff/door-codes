@@ -46,9 +46,8 @@ const deleteItem = async (req, res, next) => {
         const item = await Item.findById(req.params.id);
         const userId = req.user._id;
         const itemUserId = item.userId
-        console.log("user id: ", userId)
-        console.log("items user id: ", itemUserId)
         
+        //If UserId and items UserId doesnt match
         if (String(userId) != String(itemUserId)) {
             const error = new Error("Not authorized.");
             error.status = 403;
