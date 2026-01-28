@@ -49,6 +49,13 @@ const getItem = async (req, res, next) => {
 const updateItem = async (req, res, next) => {
     try {
         const item = await Item.findById(req.params.id);
+
+        if (!item) {
+            const error = new Error("Item wasn't found.");
+            error.status = 404;
+            throw error;
+        }
+
         const userId = req.user._id;
         const itemUserId = item.userId
         
@@ -59,11 +66,13 @@ const updateItem = async (req, res, next) => {
             throw error;
         }
 
-        const updateData = await Item.findByIdAndUpdate(req.params.id, {
-            name, 
-            address, 
-            code 
-        });
+        const { name, address, code } = req.body;
+
+        const updateData = await Item.findByIdAndUpdate(
+            req.params.id, 
+            { name, address, code },
+            { new: true }
+        );
 
         if (!updateData) {
             const error = new Error("Item wasn't found.");
@@ -72,7 +81,8 @@ const updateItem = async (req, res, next) => {
         }
 
         res.status(200).json({
-            message: "Item was updated successfully"
+            message: "Item was updated successfully",
+            data: updateData
         });
 
     } catch (error) {
