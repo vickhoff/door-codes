@@ -1,14 +1,40 @@
 import Item from "../models/item.js"
 
+const compareUserId = async (itemUserId, currentUserId) => {
+    //const item = await Item.findById(itemId);
+    
+    // const userId = currentUserId;
+    // const itemUserId = item.createdBy.userId;
+
+    console.log("userID: " + currentUserId)
+    console.log("itemUserID: " + itemUserId)
+    
+    //If UserId and items UserId doesnt match
+    if (String(currentUserId) != String(itemUserId)) {
+        const error = new Error("Not authorized.");
+        error.status = 403;
+        throw error;
+    }
+    return;
+}
+
 const createItem = async (req, res, next) => {
     try {
-        const { name, address, code } = req.body;
-        const userId = req.user._id;
+        const { 
+            name, 
+            address, 
+            code
+            //createdBy: { userId, username } = {}
+            
+    } = req.body;
         const data = await Item.create({ 
             name, 
             address, 
             code, 
-            userId: userId 
+            createdBy: {
+                userName: req.user.username,
+                userId: req.user._id
+            }
         });
         res.status(200).json(data);
     } catch (error) {
@@ -55,16 +81,8 @@ const updateItem = async (req, res, next) => {
             error.status = 404;
             throw error;
         }
-
-        const userId = req.user._id;
-        const itemUserId = item.userId
-        
-        //If UserId and items UserId doesnt match
-        if (String(userId) != String(itemUserId)) {
-            const error = new Error("Not authorized.");
-            error.status = 403;
-            throw error;
-        }
+        //Check if userID is the same as the items userId
+        await compareUserId(item.createdBy.userId, req.user._id);
 
         const { name, address, code } = req.body;
 
@@ -98,15 +116,8 @@ const updateItem = async (req, res, next) => {
 const deleteItem = async (req, res, next) => {
     try {
         const item = await Item.findById(req.params.id);
-        const userId = req.user._id;
-        const itemUserId = item.userId
-        
-        //If UserId and items UserId doesnt match
-        if (String(userId) != String(itemUserId)) {
-            const error = new Error("Not authorized.");
-            error.status = 403;
-            throw error;
-        }
+
+        await compareUserId(item.createdBy.userId, req.user._id);
 
         const deleteResult = await Item.findByIdAndDelete(req.params.id);
 
