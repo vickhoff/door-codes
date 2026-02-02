@@ -1,18 +1,11 @@
 import Item from "../models/item.js"
 
 const compareUserId = async (itemUserId, currentUserId) => {
-    //const item = await Item.findById(itemId);
-    
-    // const userId = currentUserId;
-    // const itemUserId = item.createdBy.userId;
-
-    console.log("userID: " + currentUserId)
-    console.log("itemUserID: " + itemUserId)
     
     //If UserId and items UserId doesnt match
     if (String(currentUserId) != String(itemUserId)) {
         const error = new Error("Not authorized.");
-        error.status = 403;
+        error.status = 401;
         throw error;
     }
     return;
@@ -24,9 +17,8 @@ const createItem = async (req, res, next) => {
             name, 
             address, 
             code
-            //createdBy: { userId, username } = {}
-            
     } = req.body;
+
         const data = await Item.create({ 
             name, 
             address, 
@@ -47,6 +39,7 @@ const createItem = async (req, res, next) => {
     }
 }
 
+//Get all your items
 const getItems = async (req, res, next) => {
     try {
         const userId = req.user._id;
@@ -59,9 +52,12 @@ const getItems = async (req, res, next) => {
 
 const getItem = async (req, res, next) => {
     try {
-        const data = await Item.findById(req.params.id);
+        const item = await Item.findById(req.params.id);
 
-        res.status(200).json(data);
+            //Check if userID is the same as the items userId
+            await compareUserId(item.createdBy.userId, req.user._id);
+
+        res.status(200).json(item);
     } catch (error) {
         if (error.name === "CastError") {
             return res.status(404).json({
