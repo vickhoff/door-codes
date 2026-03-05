@@ -1,6 +1,7 @@
 # Door Codes API
 
-A RESTful API for managing door codes with user authentication. Users can register, login, and manage their own or friends door code entries securely.
+A RESTful API and mongoDB Database for managing door codes with user authentication. Users can register, login, and manage their own or friends door code entries securely. Created as a part of the Backend & API course at Hyper Island.
+(This is a work in progress)
 
 ## Features
 
@@ -95,6 +96,24 @@ node api.js
 
 The server will start on `http://localhost:3000`
 
+## API Endpoints
 
+Base URL: `http://localhost:3000/api`
+
+Protected routes need: `Authorization: Bearer <token>`
+
+**Auth**
+- `POST /api/auth/register` — Body: `{ username, email, password }`
+- `POST /api/auth/login` — Body: `{ username, password }` → returns `{ token }`
+
+**User**
+- `GET /api/user/profile` — Protected
+
+**Items** (all protected)
+- `POST /api/items/add` — Body: `{ name, address, code }`
+- `GET /api/items` — List your items
+- `GET /api/items/:id` — Get one item
+- `PATCH /api/items/update/:id` — Body: `{ name?, address?, code? }`
+- `DELETE /api/items/delete/:id`
 
 
