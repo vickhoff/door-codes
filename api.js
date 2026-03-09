@@ -9,32 +9,45 @@ const app = express();
 app.use(express.json());
 const appPort = 3000;
 
-const startApp = async () => {
+// Ensure DB connection before handling requests (cached in database.js)
+app.use(async (req, res, next) => {
     try {
-        await connectToDatabase()
-
-        app.listen(appPort, () => {
-            console.log(`Server is running on http://localhost:${appPort}`)
-        })
+        await connectToDatabase();
+        next();
     } catch (error) {
-        console.error(error)
+        next(error);
     }
-}
+});
 
 app.use("/api/items", itemsRouter);
 app.use("/api/user", usersRouter);
 app.use("/api/auth", authRouter);
 
-app.use ((error, req, res, next) => {
-    console.error(error)
+app.use((error, req, res, next) => {
+    console.error(error);
     const statusCode = error.status || 500;
-    const message = error.message || "Something went wrong"; 
-    res.status (statusCode).json({
+    const message = error.message || "Something went wrong";
+    res.status(statusCode).json({
         message: message
-    })
-})
+    });
+});
 
-startApp()
+const startApp = async () => {
+    try {
+        await connectToDatabase();
+        if (!process.env.VERCEL) {
+            app.listen(appPort, () => {
+                console.log(`Server is running on http://localhost:${appPort}`);
+            });
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+startApp();
+
+export default app;
 
 
 
