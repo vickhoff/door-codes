@@ -63,8 +63,8 @@ const login = async (req, res, next) => {
             maxAge: 60 * 60 * 1000
         });
         res.json({             
-            username,
-            email
+            username: user.username,
+            email: user.email
         })
     } catch (error) {
         next(error);
