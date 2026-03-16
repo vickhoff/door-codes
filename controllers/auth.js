@@ -62,7 +62,10 @@ const login = async (req, res, next) => {
             sameSite: "strict",
             maxAge: 60 * 60 * 1000
         });
-        res.json({ message: "Login successful" })
+        res.json({             
+            username,
+            email
+        })
     } catch (error) {
         next(error);
     }
