@@ -43,7 +43,7 @@ const createItem = async (req, res, next) => {
 const getItems = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const data = await Item.find({userId: userId});
+        const data = await Item.find({"createdBy.userId": userId});
         res.status(200).json(data);
     } catch (error) {
         next(error);
