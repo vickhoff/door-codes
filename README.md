@@ -52,7 +52,7 @@ Before you begin, ensure you have the following installed:
    
    **Important:** 
    - Replace `your_secret_key_here` with a strong, random string for JWT token signing
-   - For MongoDB Atlas, use: `MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net`
+   - For MongoDB Atlas, use: `MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net`
    - For local MongoDB, use: `MONGO_URI=mongodb://localhost:27017`
 
 4. **Start MongoDB** (if running locally)

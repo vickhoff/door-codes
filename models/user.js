@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
 
 //Validate email
 function validateEmail(email) {
-    const emailRegex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
+    const emailRegex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/im;
     return emailRegex.test(email);
 }
 
