@@ -40,7 +40,7 @@ const login = async (req, res, next) => {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({
-                message: "User not found"
+                message: "Incorrect username or password"
             });
         }
 
@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
         const passwordMatch = await user.comparePassword(password);
         if(!passwordMatch) {
             return res.status(401).json({
-                message: "Incorrect password"
+                message: "Incorrect username or password"
             });
         }
 
