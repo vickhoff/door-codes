@@ -18,7 +18,7 @@ const itemSchema = new mongoose.Schema({
         userId: {
             type: "ObjectId",
             ref: "User"        },
-        userName: {
+        name: {
             type: "String",
             ref: "User"        }
     }

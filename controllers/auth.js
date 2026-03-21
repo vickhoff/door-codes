@@ -3,11 +3,11 @@ import User from "../models/user.js";
 
 //Register user
 const register = async (req, res, next) => {
-    const { username, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     try {
         const user = new User({
-            username,
+            name,
             email,
             password
         });
@@ -40,7 +40,7 @@ const login = async (req, res, next) => {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({
-                message: "Incorrect username or password"
+                message: "Incorrect name or password"
             });
         }
 
@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
         const passwordMatch = await user.comparePassword(password);
         if(!passwordMatch) {
             return res.status(401).json({
-                message: "Incorrect username or password"
+                message: "Incorrect name or password"
             });
         }
 
@@ -63,7 +63,7 @@ const login = async (req, res, next) => {
             maxAge: 60 * 60 * 1000
         });
         res.json({             
-            username: user.username,
+            name: user.name,
             email: user.email
         })
     } catch (error) {

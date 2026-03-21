@@ -103,8 +103,8 @@ Base URL: `http://localhost:3000/api`
 Protected routes need: `Authorization: Bearer <token>`
 
 **Auth**
-- `POST /api/auth/register` — Body: `{ username, email, password }`
-- `POST /api/auth/login` — Body: `{ username, password }` → returns `{ token }`
+- `POST /api/auth/register` — Body: `{ name, email, password }`
+- `POST /api/auth/login` — Body: `{ name, password }` → returns `{ token }`
 
 **User**
 - `GET /api/user/profile` — Protected

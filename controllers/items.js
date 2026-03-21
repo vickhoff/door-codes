@@ -24,7 +24,7 @@ const createItem = async (req, res, next) => {
             address, 
             code, 
             createdBy: {
-                userName: req.user.username,
+                name: req.user.name,
                 userId: req.user._id
             }
         });
