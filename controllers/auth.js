@@ -12,8 +12,18 @@ const register = async (req, res, next) => {
             password
         });
         await user.save();
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+            expiresIn: "1h"
+        });
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 60 * 60 * 1000
+        });
         res.status(201).json({
-            message: "Registration successful"
+            name: user.name,
+            email: user.email
         });
     } catch (error) {
         if (error.name === "ValidationError") {
