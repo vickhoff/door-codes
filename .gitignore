@@ -16,3 +16,5 @@ build/
 # Configuration files
 nodemon.json
 .vercel
+
+ClAUDE.md
