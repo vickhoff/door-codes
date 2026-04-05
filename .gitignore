@@ -18,3 +18,5 @@ nodemon.json
 .vercel
 
 ClAUDE.md
+.claude
+.claude/
