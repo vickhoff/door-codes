@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import itemsRouter from "./routes/items.js";
 import usersRouter from "./routes/users.js";
 import authRouter from "./routes/auth.js";
+import addressRouter from "./routes/address.js";
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(async (req, res, next) => {
 app.use("/api/items", itemsRouter);
 app.use("/api/user", usersRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/address", addressRouter);
 
 app.use((error, req, res, next) => {
     console.error(error);
