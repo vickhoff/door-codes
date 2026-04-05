@@ -1,7 +1,7 @@
 const autoComplete = async(req, res, next) => {
     try {
 
-        const address = req.body.address;
+        const address = req.body.input;
 
         if (!address) {
             const error = new Error("Address is required");
