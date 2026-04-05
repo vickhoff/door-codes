@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 const autoComplete = async(req, res, next) => {
     try {
 
