@@ -4,7 +4,7 @@ const autoComplete = async(req, res, next) => {
     try {
 
         const address = req.body.input;
-
+        console.log(process.env.GOOGLE_API_KEY)
         if (!address) {
             const error = new Error("Address is required");
             error.status = 400;
