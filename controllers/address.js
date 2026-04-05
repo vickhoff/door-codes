@@ -16,7 +16,19 @@ const autoComplete = async(req, res, next) => {
                 'Content-Type': "application/json",
                 "X-Goog-Api-Key": process.env.GOOGLE_API_KEY
             },
-            body: JSON.stringify({input: address})
+            body: JSON.stringify({
+                input: address,
+                "includedPrimaryTypes": ["address"],
+                "locationBias": {
+                    "circle": {
+                        "center": {
+                            "latitude": 62.45211239799033,
+                            "longitude": 15.279218389073096
+                        },
+                        "radius": 50.0
+                    }
+                }
+            })
         })
         const data = await response.json()
         res.status(200).json(data);
