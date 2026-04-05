@@ -5,8 +5,9 @@ const autoComplete = async(req, res, next) => {
 
         const address = req.body.input;
         if (!address) {
-            error.status = 400;
-            throw error;
+            const err = new Error('Input is required');
+            err.status = 400;
+            throw err;
         }
         
         const response = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
@@ -25,7 +26,7 @@ const autoComplete = async(req, res, next) => {
                             "latitude": 62.45211239799033,
                             "longitude": 15.279218389073096
                         },
-                        "radius": 50.0
+                        "radius": 50000.0
                     }
                 }
             })
