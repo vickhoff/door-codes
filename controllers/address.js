@@ -19,7 +19,7 @@ const autoComplete = async(req, res, next) => {
             },
             body: JSON.stringify({
                 input: address,
-                "includedPrimaryTypes": ["street_address"],
+                "includedPrimaryTypes": ["geocode"],
                 "locationBias": {
                     "circle": {
                         "center": {
