@@ -7,8 +7,16 @@ const itemSchema = new mongoose.Schema({
         required: [true, "Name is required"]
     },
     address: {
-        type: String,
-        required: [true, "Address is required"]
+        text: {
+            type: String,
+            required: [true, "Address is required"]
+        },
+        lat: {
+            type: Number
+        },
+        long: {
+            type: Number
+        }
     },
     code: {
         type: String,
