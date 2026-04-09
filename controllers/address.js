@@ -39,4 +39,31 @@ const autoComplete = async(req, res, next) => {
     }
 }
 
-export { autoComplete }
+const latLong = async(req, res, next) => {
+    try {
+
+        const placeId = req.body.placeId;
+        if (!placeId) {
+            const err = new Error("Couldn't get long or lat");
+            err.status = 400;
+            throw err;
+        }
+        
+        const response = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                'Content-Type': "application/json",
+                "X-Goog-Api-Key": process.env.GOOGLE_API_KEY,
+                "X-Goog-FieldMask": "location"
+            }
+        })
+        const data = await response.json()
+        res.status(200).json(data);
+        
+    } catch(error) {
+        next(error)
+    }
+}
+
+export { autoComplete, latLong }
